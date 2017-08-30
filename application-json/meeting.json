@@ -1,0 +1,14 @@
+{
+    "httpMethod": "POST",
+    "body": {
+        "TableName": "interview_meeting",
+        "Item": {
+            "tenantIdMeetingId": "$input.params('tenantId'):$context.requestId",
+            "tenantId": "$input.params('tenantId')",
+            "meetingId": "$context.requestId",
+            "interviewId": $input.json('$.body.Item.interviewId'),
+            "startDate": $input.json('$.body.Item.startDate'),
+            "endDate": $input.json('$.body.Item.endDate')
+        }
+    }
+}
