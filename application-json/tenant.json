@@ -1,0 +1,11 @@
+{
+    "httpMethod": "POST",
+    "body": {
+        "TableName": "interview_tenant",
+        "Item": {
+            "tenantId": "$input.params('tenantId')",
+            "customerId": "$input.params('customerId')",
+            "uid": "$input.params('uid')"
+        }
+    }
+}
