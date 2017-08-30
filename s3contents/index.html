@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body style="text-align:center">
+	<h1>Create New Tenants</h1>
+	<form action="https://t5x0clipk9.execute-api.us-west-2.amazonaws.com/prod/tenants" method="post" onsubmit="hideForm()">
+		<div class="center">
+			<div class="left">
+			<div>
+				TenantId: <input type="text" name="tenantId">
+			</div><div>
+				CustomerId: <input type="number" name="customerId">
+			</div><div>
+				UID<input type="text" name="uid">
+			</div>
+			<div>
+		</div>
+		<div style="padding-top: 20px;"><input type="submit" value="Submit" /></div>
+	</form>
+	<div class="thanks" style="display:none">Tenant create request subitted.</div>
+
+	<h1>RESULTS</h1>
+	<div id="tenantTable"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+var createCORSRequest = function(method, url) {
+	var xhr = new XMLHttpRequest();
+	if ("withCredentials" in xhr) {
+		// Most browsers.
+		xhr.open(method, url, true);
+	} else if (typeof XDomainRequest != "undefined") {
+		// IE8 & IE9
+		xhr = new XDomainRequest();
+		xhr.open(method, url);
+	} else {
+		// CORS not supported.
+		xhr = null;
+	}
+	return xhr;
+};
+
+var loadXMLDoc = function(autoRefresh){
+	var width = 600,
+    	barHeight = 50,
+		padding = 60;
+
+	var url = 'data.json';
+	var method = 'GET';
+	var xhr = createCORSRequest(method, url);
+
+	xhr.onload = function(req) {
+		  var data = JSON.parse(this.responseText).Items;
+
+	  	data = data.sort((a,b) => a.customerId - b.customerId);
+
+			var tbl=$("<table/>").attr("id","mytable");
+			$("#tenantTable table").remove();
+			$("#tenantTable").append(tbl);
+			$("#mytable tr").remove();
+			$("#mytable").append("<tr><th>TenantId</th><th>CustomerId</th><th>UID</th><th>Create New Meeting</th></tr>");
+	    for(var i=0;i<data.length;i++)
+	    {
+				var td1="<td>"+data[i]["tenantId"]+"</td>";
+				var td2="<td>"+data[i]["customerId"]+"</td>";
+				var td3="<td>"+data[i]["uid"]+"</td>";
+				var td4="<td><a href=\"meeting.html?tenantId=" + data[i]["tenantId"] + "\">Create Meeting</a>";
+				$("#mytable").append("<tr>"+td1+td2+td3+td4+"</tr>");
+		 	}
+	};
+
+	xhr.onerror = function() {
+	  // Error code goes here.
+	};
+
+  	xhr.send();
+
+	//AutoRefresh
+	if(autoRefresh){
+		window.setTimeout(loadXMLDoc, 3000, true);
+	}
+}
+
+function hideForm(){
+	d3.select("form")
+		.style("display", "none");
+	d3.select(".thanks")
+		.style("display", "block");
+	window.setTimeout(loadXMLDoc, 1200, false);
+}
+
+loadXMLDoc(true);
+</script>
+</body>
+</html>
