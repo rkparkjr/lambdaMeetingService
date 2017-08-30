@@ -1,6 +1,1 @@
-[
-	{"name": "Clinton", "votes": 48},
-	{"name": "Trump", "votes": 37},
-	{"name": "Stein", "votes": 2},
-	{"name": "Johnson", "votes": 6}
-]
+{"Items":[{"uid":"tenantUid4","tenantId":"tenantId4","customerId":400},{"uid":"tenantUid5","tenantId":"tenantId5","customerId":500},{"uid":"tenantUid6","tenantId":"tenantId6","customerId":"600"},{"uid":"tenantUid1","tenantId":"tenantId1","customerId":100},{"uid":"tenantUid3","customerId":300,"tenantId":"tenantId3"},{"uid":"tenantUid2","customerId":200,"tenantId":"tenantId2"}],"Count":6,"ScannedCount":6}
